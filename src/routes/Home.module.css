@@ -1,0 +1,26 @@
+.container {
+    position: relative;
+}
+
+.groupList {
+    /*background-color: #448;*/
+    position: relative;
+    padding: 1em;
+}
+
+.groupContainer {
+    border-bottom: 1px solid #999;
+}
+.groupContainer:last-child {
+    border-bottom: 0px;
+}
+
+.group {
+    /*background-color: #555;*/
+    position: relative;
+    margin-bottom: 5px;
+    padding: 1em 1em 0.5em 1em;
+}
+.group span {
+    font-weight: bold;
+}

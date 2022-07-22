@@ -1,0 +1,46 @@
+.container {
+    /*background-color: chartreuse;*/
+    position: relative;
+    padding: 0 1em;
+}
+.member {
+    border-radius: 8px;
+    position: relative;
+    margin-bottom: 5px;
+    padding: 10px 10px;
+    display: flex;
+    cursor: pointer;
+}
+.member:hover {
+    background-color: #555;
+}
+.icon {
+    background-color: #fff;
+    position: relative;
+    margin-right: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+.name {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+
+@media (prefers-color-scheme: light) {
+    .icon {
+        background-color: #e0e0e0;
+    }
+    .member:hover {
+        background-color: #e0e0e0;
+    }
+    .member:hover .icon {
+        background-color: #fff;
+    }
+}
