@@ -9,14 +9,33 @@ export default function Member() {
     const navigate = useNavigate()
 
     const {state: {icon, name, group}} = useLocation()
+
     const { memberId } = useParams()
+
+    const [page, setPage] = React.useState(0)
     
-    const { isLoading, error, data } = useQuery(['data', memberId], fetchData)
+    const { isLoading, error, data } = useQuery(['data', memberId, page], fetchData)
 
     const handleExit = () => {
 
         navigate(-1)
     
+    }
+
+    const handlePrev = () => {
+        if(!data) return
+        if(page === 0) return
+        let newPage = page - 1
+        if(newPage < 0) newPage = 0
+        setPage(newPage)
+    }
+
+    const handleNext = () => {
+        if(!data) return
+        if(page >= data.pages - 1) return
+        let newPage = page + 1
+        if(newPage >= data.pages - 1) newPage = data.pages - 1
+        setPage(newPage)
     }
 
     return (
@@ -30,21 +49,32 @@ export default function Member() {
                 <div className={classes.exit} onClick={handleExit}>
                     <span>&#215;</span>
                 </div>
-                <div>
-                {
-                    data &&
-                    data.items.map((item, index) => {
-                        //console.log(item)
-                        return (
-                            <div key={index}>
-                                <div>
-                                    <span>{item.dateTime}</span>
-                                    <span>{item.data}</span>
-                                </div>
-                            </div>
-                        )
-                    })
-                }
+                <div className={classes.data}>
+                    <div className={classes.dataContainer}>
+                        {
+                            data &&
+                            data.items.map((item, index) => {
+                                return (
+                                    <div key={index}>
+                                        <div>
+                                            <span>{item.dateTime}</span>
+                                            <span>{item.data}</span>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                    <div style={{
+                        color: page === 0 ? '#99d' : '#fff'
+                    }} className={classes.leftButton} onClick={handlePrev}>
+                        <span>&#10094;</span>
+                    </div>
+                    <div style={{
+                        color: data && page === data.pages - 1 ? '#99d' : '#fff'
+                    }} className={classes.rightButton} onClick={handleNext}>
+                        <span>&#10095;</span>
+                    </div>
                 </div>
             </div>
         </div>

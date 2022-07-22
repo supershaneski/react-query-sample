@@ -25,7 +25,7 @@ export async function fetchMembers({ queryKey }) {
 
 export async function fetchData({ queryKey }) {
 
-    const url = `${import.meta.env.VITE_BASEURL}/data?memberId=${queryKey[1]}`
+    const url = `${import.meta.env.VITE_BASEURL}/data?memberId=${queryKey[1]}&page=${queryKey[2]}`
 
     const response = await fetch(url)
 

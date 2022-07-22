@@ -40,7 +40,7 @@
     font-size: 2.4em;
 }
 .name span{
-    font-size: 1.5em;
+    font-size: 1.3em;
     font-weight: bold;
     margin-bottom: 5px;
 }
@@ -66,6 +66,32 @@
 .exit span {
     font-size: 1.5em;
     font-weight: bold;
+}
+
+.data {
+    background-color: #59a;
+    position: relative;
+    height: calc(100% - 140px);
+    margin-top: 20px;
+    overflow: auto;
+}
+.dataContainer {
+    position: relative;
+    z-index: 1;
+}
+.leftButton {
+    position: absolute;
+    left: 10px;
+    top: calc(100%/2);
+    font-size: 2.5em;
+    cursor: pointer;
+}
+.rightButton {
+    position: absolute;
+    right: 10px;
+    top: calc(100%/2);
+    font-size: 2.5em;
+    cursor: pointer;
 }
 
 @media (prefers-color-scheme: light) {
