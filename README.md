@@ -19,12 +19,14 @@ Basically, there are groups, members under those groups and associated data for 
 
 In the Home page, the members will be shown organized by groups.
 
+
+![Home page](public/image1.png)
+
+
 When the user selects a member, it will go to the Member page to show the associated data for that member.
 
-### Notes on Member API
 
-The member name has this format `🧑🏻 中田マリ`, an emoticon and actual name separated by a space.
-
+![Member page](public/image2.png)
 
 # Installation
 
