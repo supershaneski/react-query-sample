@@ -69,7 +69,7 @@
 }
 
 .data {
-    background-color: #59a;
+    /*background-color: #59a;*/
     position: relative;
     height: calc(100% - 140px);
     margin-top: 20px;
@@ -78,20 +78,49 @@
 .dataContainer {
     position: relative;
     z-index: 1;
+    padding: 10px;
 }
 .leftButton {
+    background-color: #0002;
+    padding: 25px 5px;
+    border-radius: 4px;
     position: absolute;
-    left: 10px;
-    top: calc(100%/2);
+    left: 0px;
+    top: calc((100% - 50px)/2);
     font-size: 2.5em;
     cursor: pointer;
+    z-index: 10;
 }
 .rightButton {
+    background-color: #0002;
+    padding: 25px 5px;
+    border-radius: 4px;
     position: absolute;
-    right: 10px;
-    top: calc(100%/2);
+    right: 0px;
+    top: calc((100% - 50px)/2);
     font-size: 2.5em;
     cursor: pointer;
+    z-index: 10;
+}
+
+.dataItem {
+    background-color: #777;
+    position: relative;
+    margin-bottom: 10px;
+    padding: 1em;
+    border-radius: 16px;
+}
+.dataInner {
+    position: relative;
+}
+.dataDateTime {
+    position: relative;
+    margin-bottom: 10px;
+    font-size: 0.8em;
+    text-align: right;
+}
+.dataText {
+    position: relative;
 }
 
 @media (prefers-color-scheme: light) {
@@ -107,5 +136,8 @@
     .group span{
         font-size: 1em;
         color: #555;
+    }
+    .dataItem {
+        background-color: #e0e0e0;
     }
 }

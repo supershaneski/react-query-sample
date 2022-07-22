@@ -4,6 +4,35 @@ import { useQuery } from '@tanstack/react-query'
 import { fetchData } from '../api/server'
 import classes from './Member.module.css'
 
+function formatNumber(num) {
+    return num < 10 ? '0' + num : num
+}
+
+function formatDateTime(sDateStr) {
+
+    const token = sDateStr.split(" ")
+    sDateStr = [token[0], token[1]].join("T")
+
+    const odate = new Date(sDateStr)
+
+    const syear = odate.getFullYear()
+    let smonth = odate.getMonth() + 1
+    let sdate = odate.getDate()
+
+    smonth = formatNumber(smonth)
+    sdate = formatNumber(sdate)
+
+    let shour = odate.getHours()
+    let sminute = odate.getMinutes()
+
+    shour = formatNumber(shour)
+    sminute = formatNumber(sminute)
+
+    return [[syear, smonth, sdate].join("-"), [shour, sminute].join(":")].join(" ")
+    
+
+}
+
 export default function Member() {
 
     const navigate = useNavigate()
@@ -55,10 +84,10 @@ export default function Member() {
                             data &&
                             data.items.map((item, index) => {
                                 return (
-                                    <div key={index}>
-                                        <div>
-                                            <span>{item.dateTime}</span>
-                                            <span>{item.data}</span>
+                                    <div key={item._id} className={classes.dataItem}>
+                                        <div className={classes.dataInner}>
+                                            <div className={classes.dataDateTime}>{formatDateTime(item.dateTime)}</div>
+                                            <div className={classes.dataText}>{item.data}</div>
                                         </div>
                                     </div>
                                 )
@@ -66,12 +95,12 @@ export default function Member() {
                         }
                     </div>
                     <div style={{
-                        color: page === 0 ? '#99d' : '#fff'
+                        color: (!data || (data && page === 0)) ? '#fff3' : '#fff'
                     }} className={classes.leftButton} onClick={handlePrev}>
                         <span>&#10094;</span>
                     </div>
                     <div style={{
-                        color: data && page === data.pages - 1 ? '#99d' : '#fff'
+                        color: (!data || (data && data.pages === 0) || (data && page === data.pages - 1)) ? '#fff3' : '#fff'
                     }} className={classes.rightButton} onClick={handleNext}>
                         <span>&#10095;</span>
                     </div>
