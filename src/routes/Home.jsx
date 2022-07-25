@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 
-import { fetchGroups, fetchMembers } from '../api/server'
+import { fetchGroups } from '../api/server'
 
 import classes from './Home.module.css'
 
@@ -14,9 +14,11 @@ export default function Home() {
 
     const groupRef = React.useRef()
 
-    const { isLoading, error, data } = useQuery(['groups'], fetchGroups)
+    const { isLoading, error, data, refetch } = useQuery(['groups'], fetchGroups)
 
-    // Cheap way to set scroll position
+    // TODO: 
+    // Save the scroll position in some global state.
+    // For now, I am using localStorage for quick implementation.
     React.useEffect(() => {
 
         if(data?.items) {
@@ -37,7 +39,9 @@ export default function Home() {
 
     const handleClickMember = ({id, groupId, icon, name}) => {
         
-        // Cheap way to save scroll position
+        // TODO: 
+        // Save the scroll position in some global state.
+        // For now, I am using localStorage for quick implementation.
         localStorage.setItem("scroll", groupRef.current.scrollTop)
 
         const group = data.items.find(item => item.id === groupId)?.name
@@ -52,12 +56,32 @@ export default function Home() {
 
     }
 
+    const handleReload = () => {
+
+        refetch()
+
+    }
+
     return (
         <div className={classes.container}>
             <div className={classes.inner}>
                 <div ref={groupRef} className={classes.groupList}>
                 {
-                    data &&
+                    (isLoading && !error) &&
+                    <div className={classes.loader}>
+                        <span>Please wait. Loading...</span>
+                    </div>
+                }
+                {
+                    (!isLoading && error) &&
+                    <div className={classes.error}>
+                        <p>Error: {error.message}<br /><br />
+                        <button onClick={handleReload}>Reload</button>
+                        </p>
+                    </div>
+                }
+                {
+                    (!isLoading && !error && data) &&
                     data.items.map(group => {
                         return (
                             <div key={group.id} className={classes.groupContainer}>

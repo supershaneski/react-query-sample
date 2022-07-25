@@ -7,11 +7,15 @@ export default function Members({groupId, onClick}) {
 
     const { isLoading, error, data } = useQuery(['members', groupId], fetchMembers)
 
-    //console.log("member", isLoading, error)
-
     if(isLoading) {
         return <div className={classes.container}>
             <span>Loading...</span>
+        </div>
+    }
+
+    if(!isLoading && error) {
+        return <div className={classes.error}>
+            <span>Error: {error.message}</span>
         </div>
     }
 

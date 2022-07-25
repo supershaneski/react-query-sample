@@ -123,6 +123,25 @@
     position: relative;
 }
 
+.loader {
+    position: relative;
+    padding: 2em 0;
+    text-align: center;
+}
+
+.error {
+    position: relative;
+    padding: 2em 0;
+    text-align: center;
+    color: #f66;
+}
+
+.empty {
+    position: relative;
+    padding: 2em 0;
+    text-align: center;
+}
+
 @media (prefers-color-scheme: light) {
     .inner {
         background-color: #fff;

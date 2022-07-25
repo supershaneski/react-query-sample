@@ -3,6 +3,12 @@
     padding: 0;
     margin-left: 10px;
 }
+.error {
+    position: relative;
+    padding: 0;
+    margin-left: 10px;
+    color: #f66;
+}
 .member {
     border-radius: 8px;
     position: relative;

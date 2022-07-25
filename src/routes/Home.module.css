@@ -46,6 +46,19 @@
 }
 
 
+.loader {
+    position: relative;
+    padding: 2em 0;
+    text-align: center;
+}
+
+.error {
+    position: relative;
+    padding: 2em 0;
+    text-align: center;
+    color: #f66;
+}
+
 @media (prefers-color-scheme: light) {
     .inner {
         background-color: #fff;
