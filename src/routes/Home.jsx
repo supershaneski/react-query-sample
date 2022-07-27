@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, QueryClient } from '@tanstack/react-query'
 
 import { fetchGroups } from '../api/server'
 
@@ -8,19 +8,31 @@ import classes from './Home.module.css'
 
 import Members from '../components/Members'
 
+const queryClient = new QueryClient()
+
 export default function Home() {
 
     const navigate = useNavigate()
 
     const groupRef = React.useRef()
 
-    const { isLoading, error, data, refetch } = useQuery(['groups'], fetchGroups)
+    const { isLoading, error, data, refetch } = useQuery(['groups'], fetchGroups, {
+        staleTime: parseInt(import.meta.env.VITE_STALETIME),
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+    })
+
+    React.useEffect(() => {
+
+        queryClient.cancelQueries('data')
+
+    }, [])
 
     // TODO: 
     // Save the scroll position in some global state.
     // For now, I am using localStorage for quick implementation.
     React.useEffect(() => {
-
+        
         if(data?.items) {
 
             let scroll = localStorage.getItem("scroll")
@@ -45,6 +57,8 @@ export default function Home() {
         localStorage.setItem("scroll", groupRef.current.scrollTop)
 
         const group = data.items.find(item => item.id === groupId)?.name
+
+        queryClient.cancelQueries("groups")
 
         navigate(`/member/${id}`, {
             state: {

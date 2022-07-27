@@ -5,7 +5,12 @@ import classes from './Members.module.css'
 
 export default function Members({groupId, onClick}) {
 
-    const { isLoading, error, data } = useQuery(['members', groupId], fetchMembers)
+    const { isLoading, isError, error, data } = useQuery(['members', groupId], fetchMembers, 
+        {
+            staleTime: parseInt(import.meta.env.VITE_STALETIME),
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
+        })
 
     if(isLoading) {
         return <div className={classes.container}>
@@ -13,7 +18,7 @@ export default function Members({groupId, onClick}) {
         </div>
     }
 
-    if(!isLoading && error) {
+    if(isError) {
         return <div className={classes.error}>
             <span>Error: {error.message}</span>
         </div>

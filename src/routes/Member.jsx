@@ -56,7 +56,12 @@ export default function Member() {
 
     const [page, setPage] = React.useState(0)
     
-    const { isLoading, error, data, refetch } = useQuery(['data', memberId, page], fetchData)
+    const { isLoading, error, data, refetch } = useQuery(['data', memberId, page], fetchData, {
+        staleTime: parseInt(import.meta.env.VITE_STALETIME),
+        retry: 5, // means it will fetch data 1+5 (6 times)
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+    })
 
     const handleExit = () => {
 

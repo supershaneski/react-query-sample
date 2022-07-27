@@ -42,11 +42,25 @@ There are still lots to learn and I am probably just scratching what react-query
 So far here are my observations:
 
 
-- I can see that it refetches when request fails. Can it do exponential retry?
+- I can see that it refetches when request fails. Can it do exponential backoff? [Yes](https://tanstack.com/query/v4/docs/guides/important-defaults). By default, it will retry 3X when request fails and it is possible to change it.
   
-- It caches the response. But how do I control whether it uses cache or fetch the server again? Or should I handle it myself?
+```javascript
+const { isLoading, error, data, refetch } = useQuery(['groups'], fetchGroups, {retry: 5, })
+```
+  
+- It caches the response. And we can use `staleTime` and `cacheTime` to control when the time to retry fetch and how long will the cache be retained.
 
-- How do I handle [JWT](https://auth0.com/learn/json-web-tokens/) refresh token? It seems I need to use [react-query-auth](https://www.npmjs.com/package/react-query-auth) or similar library for authentication.
+```javascript
+const { isLoading, error, data, refetch } = useQuery(['groups'], fetchGroups, {staleTime: 10000, }) // won't refetch again for 10s
+```
+
+
+- Lastly, how do I handle [JWT](https://auth0.com/learn/json-web-tokens/) refresh token? It seems I need to use [react-query-auth](https://www.npmjs.com/package/react-query-auth) or similar library for authentication.
+
+
+
+
+Aside from the last item (auth) which I have not yet tried, it covers all my concern brilliantly!
 
 
 
