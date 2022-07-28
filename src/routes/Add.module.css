@@ -54,28 +54,40 @@
 
 .error {
     position: relative;
-    padding: 2em 0;
-    text-align: center;
     color: #f66;
 }
 
-.fab {
-    position: fixed;
-    right: 2em;
-    bottom: 2em;
-    z-index: 10;
-}
-.button {
+.main {
     position: relative;
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    font-size: 2em;
-    padding: 0;
-    opacity: 0.5;
 }
-.button:hover {
-    opacity: 1.0;
+.title {
+    font-size: 1.5em;
+    text-align: center;
+    margin: 0 0 1em 0;
+}
+
+.form {
+    position: relative;
+    margin-bottom: 10px;
+}
+.label {
+    display: block;
+}
+.text {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+.select {
+    width: 200px;
+    font-size: 1em;
+}
+.loadError {
+    color: #f66;
+}
+.action {
+    display: flex;
+    flex-direction: column;
 }
 
 @media (prefers-color-scheme: light) {

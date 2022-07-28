@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useQuery, QueryClient } from '@tanstack/react-query'
+import { useQuery, QueryClient, useQueryClient } from '@tanstack/react-query'
 
 import { fetchGroups } from '../api/server'
 
@@ -8,7 +8,7 @@ import classes from './Home.module.css'
 
 import Members from '../components/Members'
 
-const queryClient = new QueryClient()
+//const queryClient = new QueryClient()
 
 export default function Home() {
 
@@ -16,17 +16,22 @@ export default function Home() {
 
     const groupRef = React.useRef()
 
+    const queryClient = useQueryClient()
+
     const { isLoading, error, data, refetch } = useQuery(['groups'], fetchGroups, {
         staleTime: parseInt(import.meta.env.VITE_STALETIME),
-        refetchOnMount: false,
-        refetchOnWindowFocus: false,
+        cacheTime: parseInt(import.meta.env.VITE_CACHETIME),
+        //refetchOnMount: false,
+        //refetchOnWindowFocus: false,
     })
 
+    /*
     React.useEffect(() => {
 
         queryClient.cancelQueries('data')
 
     }, [])
+    */
 
     // TODO: 
     // Save the scroll position in some global state.
@@ -58,7 +63,7 @@ export default function Home() {
 
         const group = data.items.find(item => item.id === groupId)?.name
 
-        queryClient.cancelQueries("groups")
+        //queryClient.cancelQueries("groups")
 
         navigate(`/member/${id}`, {
             state: {
@@ -73,6 +78,12 @@ export default function Home() {
     const handleReload = () => {
 
         refetch()
+
+    }
+
+    const handleAdd = () => {
+        
+        navigate(`/member/add`)
 
     }
 
@@ -107,6 +118,9 @@ export default function Home() {
                         )
                     })
                 }
+                </div>
+                <div className={classes.fab}>
+                    <button className={classes.button} onClick={handleAdd}>&#43;</button>
                 </div>
             </div>
         </div>

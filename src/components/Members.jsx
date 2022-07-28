@@ -8,8 +8,9 @@ export default function Members({groupId, onClick}) {
     const { isLoading, isError, error, data } = useQuery(['members', groupId], fetchMembers, 
         {
             staleTime: parseInt(import.meta.env.VITE_STALETIME),
-            refetchOnMount: false,
-            refetchOnWindowFocus: false,
+            cacheTime: parseInt(import.meta.env.VITE_CACHETIME),
+            //refetchOnMount: false,
+            //refetchOnWindowFocus: false,
         })
 
     if(isLoading) {

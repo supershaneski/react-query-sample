@@ -54,6 +54,22 @@ const { isLoading, error, data, refetch } = useQuery(['groups'], fetchGroups, {r
 const { isLoading, error, data, refetch } = useQuery(['groups'], fetchGroups, {staleTime: 10000, }) // won't refetch again for 10s
 ```
 
+- Testing posting data using `useMutation`. It works like charm. Combined with [`invalidateQueries`](https://tanstack.com/query/v4/docs/guides/query-invalidation), what more one should ask for? Note to self, do not enable `refetchOnMount` in the `useQuery` options.
+
+```javascript
+const queryClient = useQueryClient()
+
+const mutation = useMutation((data) => {
+        return postData(data)
+    }, {
+        onSuccess: (data, variable, context) => {
+            queryClient.invalidateQueries({
+                predicate: query => query.queryKey[0] === 'data' && query.queryKey[1] === memberId && query.queryKey[2] >= 0,
+            })
+        },
+    })
+```
+
 
 - Lastly, how do I handle [JWT](https://auth0.com/learn/json-web-tokens/) refresh token? It seems I need to use [react-query-auth](https://www.npmjs.com/package/react-query-auth) or similar library for authentication.
 

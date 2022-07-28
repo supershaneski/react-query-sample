@@ -58,14 +58,24 @@ export default function Member() {
     
     const { isLoading, error, data, refetch } = useQuery(['data', memberId, page], fetchData, {
         staleTime: parseInt(import.meta.env.VITE_STALETIME),
+        cacheTime: parseInt(import.meta.env.VITE_CACHETIME),
         retry: 5, // means it will fetch data 1+5 (6 times)
-        refetchOnMount: false,
-        refetchOnWindowFocus: false,
+        //refetchOnMount: false,
+        //refetchOnWindowFocus: false,
     })
+
+    /*
+    React.useEffect(() => {
+        console.log("member page mounted...", memberId, page)
+    }, [])
+    */
 
     const handleExit = () => {
 
-        navigate(-1)
+        console.log((new Date()).toLocaleTimeString(), "exit")
+
+        //navigate(-1)
+        navigate('/')
     
     }
 
@@ -90,6 +100,18 @@ export default function Member() {
     const handleReload = () => {
 
         refetch()
+
+    }
+
+    const handleAdd = () => {
+
+        navigate(`/data/add/${memberId}`, {
+            state: {
+                icon,
+                name,
+                group,
+            }
+        })
 
     }
 
@@ -127,7 +149,9 @@ export default function Member() {
                                     <div key={item._id} className={classes.dataItem}>
                                         <div className={classes.dataInner}>
                                             <div className={classes.dataDateTime}>{formatDateTime(item.dateTime)}</div>
-                                            <div className={classes.dataText}>{item.data}</div>
+                                            <div className={classes.dataText}>
+                                                <div className={classes.textCon}>{item.data}</div>
+                                            </div>
                                         </div>
                                     </div>
                                 )
@@ -150,6 +174,9 @@ export default function Member() {
                     }} className={classes.rightButton} onClick={handleNext}>
                         <span>&#10095;</span>
                     </div>
+                </div>
+                <div className={classes.fab}>
+                    <button onClick={handleAdd} className={classes.button}>&#43;</button>
                 </div>
             </div>
         </div>
