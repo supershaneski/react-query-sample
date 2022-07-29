@@ -8,11 +8,15 @@ import classes from './Home.module.css'
 
 import Members from '../components/Members'
 
+import AppContext from '../lib/AppContext'
+
 //const queryClient = new QueryClient()
 
 export default function Home() {
 
     const navigate = useNavigate()
+
+    const appState = React.useContext(AppContext)
 
     const groupRef = React.useRef()
 
@@ -40,7 +44,7 @@ export default function Home() {
         
         if(data?.items) {
 
-            let scroll = localStorage.getItem("scroll")
+            let scroll = appState.scroll //localStorage.getItem("scroll")
             if(scroll) {
                 
                 scroll = parseInt(scroll)
@@ -59,7 +63,8 @@ export default function Home() {
         // TODO: 
         // Save the scroll position in some global state.
         // For now, I am using localStorage for quick implementation.
-        localStorage.setItem("scroll", groupRef.current.scrollTop)
+        //localStorage.setItem("scroll", groupRef.current.scrollTop)
+        appState.setScroll({ scroll: groupRef.current.scrollTop })
 
         const group = data.items.find(item => item.id === groupId)?.name
 
