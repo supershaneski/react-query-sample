@@ -1,51 +1,8 @@
 import React from 'react'
-import { useParams, useLocation, useNavigate, Navigate } from 'react-router-dom'
-import { useQuery, useMutation, useQueryClient, QueryClient } from '@tanstack/react-query'
-import { fetchData, postData } from '../api/server'
+import { useParams, useLocation, useNavigate } from 'react-router-dom'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { postData } from '../api/server'
 import classes from './Data.module.css'
-
-function DataFlux() {
-    const [data, setData] = React.useState((new Date()).toLocaleTimeString())
-    React.useEffect(() => {
-        const flux = setInterval(() => {
-            setData((new Date()).toLocaleTimeString())
-        }, 1000)
-        return () => {
-            clearInterval(flux)
-        }
-    }, [])
-    return <span>{data}</span>
-}
-
-function formatNumber(num) {
-    return num < 10 ? '0' + num : num
-}
-
-function formatDateTime(sDateStr) {
-
-    const token = sDateStr.split(" ")
-    sDateStr = [token[0], token[1]].join("T")
-
-    const odate = new Date(sDateStr)
-
-    const syear = odate.getFullYear()
-    let smonth = odate.getMonth() + 1
-    let sdate = odate.getDate()
-
-    smonth = formatNumber(smonth)
-    sdate = formatNumber(sdate)
-
-    let shour = odate.getHours()
-    let sminute = odate.getMinutes()
-
-    shour = formatNumber(shour)
-    sminute = formatNumber(sminute)
-
-    return [[syear, smonth, sdate].join("-"), [shour, sminute].join(":")].join(" ")
-
-}
-
-//const queryClient = new QueryClient()
 
 export default function Data() {
 
@@ -62,10 +19,6 @@ export default function Data() {
     }, {
         onSuccess: (data, variable, context) => {
             
-            /*queryClient.invalidateQueries({
-                predicate: query => query.queryKey[0] === 'data' && query.queryKey[1] === memberId && query.queryKey[2] >= 0,
-            })*/
-
             queryClient.invalidateQueries(['data'])
 
             setTimeout(callMeBaby, 1000)
@@ -118,7 +71,7 @@ export default function Data() {
                 <div className={classes.member}>
                     <div className={classes.icon}><span>{icon}</span></div>
                     <div className={classes.name}><span>{name}</span></div>
-                    <div className={classes.group}><span>{group}</span><DataFlux /></div>
+                    <div className={classes.group}><span>{group}</span></div>
                 </div>
                 <div className={classes.exit} onClick={handleExit}>
                     <span>&#215;</span>

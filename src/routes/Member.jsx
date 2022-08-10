@@ -4,19 +4,6 @@ import { useQuery } from '@tanstack/react-query'
 import { fetchData } from '../api/server'
 import classes from './Member.module.css'
 
-function DataFlux() {
-    const [data, setData] = React.useState((new Date()).toLocaleTimeString())
-    React.useEffect(() => {
-        const flux = setInterval(() => {
-            setData((new Date()).toLocaleTimeString())
-        }, 1000)
-        return () => {
-            clearInterval(flux)
-        }
-    }, [])
-    return <span>{data}</span>
-}
-
 function formatNumber(num) {
     return num < 10 ? '0' + num : num
 }
@@ -121,7 +108,7 @@ export default function Member() {
                 <div className={classes.member}>
                     <div className={classes.icon}><span>{icon}</span></div>
                     <div className={classes.name}><span>{name}</span></div>
-                    <div className={classes.group}><span>{group}</span><DataFlux /></div>
+                    <div className={classes.group}><span>{group}</span></div>
                 </div>
                 <div className={classes.exit} onClick={handleExit}>
                     <span>&#215;</span>
